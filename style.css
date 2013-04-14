@@ -1,0 +1,9 @@
+/*
+Theme Name:     Riichi Mahjong
+Author:         Wesley Luk
+Template:       twentytwelve
+Version:        0.1.0
+*/
+
+@import url("./css/bootstrap.min.css");
+@import url("../twentytwelve/style.css");

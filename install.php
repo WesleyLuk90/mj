@@ -4,6 +4,7 @@ class MJDB {
 
 	const GAME_FLAG_NORMAL = 0;
 	const GAME_FLAG_DELETED = 1;
+	const CURRENT_VERSION = "0.1";
 
 
 	public function __construct(){
@@ -52,8 +53,11 @@ class MJDB {
 	}
 
 	public function mj_check_install(){
-		$this->update_databases();
-		$this->update_roles_capabilites();
+		if(get_option("mj_version_number") !== self::CURRENT_VERSION){
+			$this->update_databases();
+			$this->update_roles_capabilites();
+			update_option("mj_version_number", self::CURRENT_VERSION);
+		}
 	}
 }
 

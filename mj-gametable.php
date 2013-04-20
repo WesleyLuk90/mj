@@ -23,7 +23,11 @@
 
 		foreach ($games as $key => $row) {
 			echo "<tr>";
-			echo "<td>{$row->time}</td>";
+			if($row->time == "0000-00-00 00:00:00"){
+				echo "<td>N/A</td>";
+			} else {
+				echo "<td>{$row->time}</td>";
+			}
 			print_table_data($row->player_1_id, $player_names, $row->player_1_score);
 			print_table_data($row->player_2_id, $player_names, $row->player_2_score);
 			print_table_data($row->player_3_id, $player_names, $row->player_3_score);

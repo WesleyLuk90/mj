@@ -78,7 +78,7 @@ function mj_get_game_placement($game){
 	$points[] = $game->player_3_score;
 	$points[] = $game->player_4_score;
 
-	array_multisort($points, $users);
+	array_multisort($points, SORT_DESC, $users);
 
 	return array(
 		'players' => $users,

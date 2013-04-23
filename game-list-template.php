@@ -56,13 +56,35 @@ if($isEditor){ ?>
 			wp_nonce_field( 'create-game');
 
 			mj_print_player_select(array('label'=>'Player 1', 'name' => 'p1-userid'));
-			mj_print_point_input_box(array('name' => 'p1-points'));
+			mj_print_point_input_box(array('name' => 'p1-points', 'class' => 'input-mini point-input'));
 			mj_print_player_select(array('label'=>'Player 2', 'name' => 'p2-userid'));
-			mj_print_point_input_box(array('name' => 'p2-points'));
+			mj_print_point_input_box(array('name' => 'p2-points', 'class' => 'input-mini point-input'));
 			mj_print_player_select(array('label'=>'Player 3', 'name' => 'p3-userid'));
-			mj_print_point_input_box(array('name' => 'p3-points'));
+			mj_print_point_input_box(array('name' => 'p3-points', 'class' => 'input-mini point-input'));
 			mj_print_player_select(array('label'=>'Player 4', 'name' => 'p4-userid'));
-			mj_print_point_input_box(array('name' => 'p4-points'));
+			mj_print_point_input_box(array('name' => 'p4-points', 'class' => 'input-mini point-input'));
+		?>
+		<div class="control-group">
+			<div class="controls"><p>Total:<span class="total">0</span></p></div>
+		</div>
+		<?php
+			add_action('wp_print_footer_scripts', 'print_on_page_script');
+			function print_on_page_script(){
+				?>
+				<script type="text/javascript">
+					$(function(){
+						$('.point-input').on('change', function(){
+							var inputs = $('.point-input');
+							var total = 0;
+							for (var i = 0; i < inputs.length; i++) {
+								total += parseFloat($(inputs[i]).val()) || 0;
+							};
+							$('.total').text(Math.round(total * 10) / 10);
+						});
+					});
+				</script>
+				<?php
+			}
 		?>
 		<div class="control-group">
 			<div class="controls"><button type="submit" class="btn">Create Game</button></div>

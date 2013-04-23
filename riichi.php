@@ -108,7 +108,7 @@ function mj_get_player_ids_from_games($games){
 		$player_ids[] = $row->player_3_id;
 		$player_ids[] = $row->player_4_id;
 	}
-	return $player_ids;
+	return array_values(array_unique($player_ids));
 }
 
 function mj_print_player_select( $args = array() ){

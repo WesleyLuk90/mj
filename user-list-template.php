@@ -16,7 +16,7 @@ $userlist = new UserList();
 			<tr>
 				<td><a href="<?php echo mj_get_user_detail_page_url($userlist->getPlayerID($i)) ?>">
 					<?php echo $userlist->getPlayerName($i); ?></a></td>
-				<td><?php echo $userlist->getPlayerAverage($i); ?></td>
+				<td><?php echo mj_format_score($userlist->getPlayerAverage($i)); ?></td>
 			</tr>
 		<?php endfor; ?>
 	</tbody>

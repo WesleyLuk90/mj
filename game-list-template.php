@@ -5,8 +5,8 @@
 /**
  * Insert a new game into the table
  */
-$iseditor = current_user_can('mj_edit_games');
-if($iseditor){
+$isEditor = current_user_can('mj_edit_games');
+if($isEditor){
 	if ( !empty($_POST) && wp_verify_nonce($_POST['_wpnonce'],'create-game') !== false ) {
 		$p1points = stripslashes_deep($_POST['p1-points']) * 1000;
 		$p2points = stripslashes_deep($_POST['p2-points']) * 1000;
@@ -44,8 +44,11 @@ if($iseditor){
 get_header();
 
 $games = mj_get_games_list();
-get_template_part('mj', 'gametable');
-if($iseditor){ ?>
+mj_print_game_table(array(
+	'isEditor' => $isEditor,
+	'games' => $games,
+));
+if($isEditor){ ?>
 	<form method="POST" class="form-horizontal">
 		<fieldset>
 			<legend>Create Game</legend>

@@ -171,4 +171,52 @@ function mj_get_current_page_url(){
 function mj_get_user_detail_page_url($userid){
 	return sprintf('%s?id=%d', get_option('riichi_user_detail_url'), $userid);
 }
+
+function mj_print_game_table($args){
+	global $gameData, $isEditor;
+	$defaults = array(
+		'games' => array(),
+		'isEditor' => false
+	);
+
+	$args = wp_parse_args($args, $defaults);
+	extract($args);
+
+	$player_ids = mj_get_player_ids_from_games($games);
+	$player_names = mj_get_players_names($player_ids);
+
+	$gameData = array();
+	foreach ($games as $key => $game) {
+		$scores = array();
+		$ids = array();
+		$names = array();
+
+		$ids[] = $game->player_1_id;
+		$scores[] = $game->player_1_score;
+		$names[] = $player_names[$game->player_1_id];
+
+		$ids[] = $game->player_2_id;
+		$scores[] = $game->player_2_score;
+		$names[] = $player_names[$game->player_2_id];
+
+		$ids[] = $game->player_3_id;
+		$scores[] = $game->player_3_score;
+		$names[] = $player_names[$game->player_3_id];
+
+		$ids[] = $game->player_4_id;
+		$scores[] = $game->player_4_score;
+		$names[] = $player_names[$game->player_4_id];
+
+		array_multisort($scores, SORT_DESC, $ids, $names);
+		$gameData[] = array(
+			'scores' => $scores,
+			'ids' => $ids,
+			'names' => $names,
+			'time' => $game->time,
+			'game_id' => $game->id
+		);
+	}
+
+	get_template_part('mj', 'gametable');
+}
 ?>

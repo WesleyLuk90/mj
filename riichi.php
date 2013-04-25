@@ -29,7 +29,6 @@ function mj_tally_player_placement($userid, $game_placement_array){
 		foreach ($game['players'] as $placement => $playerid){
 			if($playerid == $userid){
 				$our_placement[$gameindex] = $placement;
-				continue;
 			}
 			$players[$playerid] = array(
 				'first' => 0,
@@ -42,9 +41,6 @@ function mj_tally_player_placement($userid, $game_placement_array){
 	}
 	foreach ($game_placement_array as $gameindex => $game) {
 		foreach ($game['players'] as $placement => $playerid){
-			if($playerid == $userid){
-				continue;
-			}
 			$this_game_placement = $our_placement[$gameindex];
 			switch($this_game_placement){
 				case 0:

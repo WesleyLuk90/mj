@@ -15,27 +15,40 @@
 					<th>Games Played</th>
 					<td><?php echo $userdetails->getGamesPlayed() ?></td>
 				</tr>
+				<tr>
+					<th>Firsts</th>
+					<td><?php echo $userdetails->getPlayerFirsts() ?></td>
+				</tr>
+				<tr>
+					<th>Seconds</th>
+					<td><?php echo $userdetails->getPlayerSeconds() ?></td>
+				</tr>
+				<tr>
+					<th>Thirds</th>
+					<td><?php echo $userdetails->getPlayerThirds() ?></td>
+				</tr>
+				<tr>
+					<th>Forths</th>
+					<td><?php echo $userdetails->getPlayerForths() ?></td>
+				</tr>
 			</table>
 		</div>
 	</div>
 	<h4>VS Placement Table</h4>
-	<?php
-		$tallies = $userdetails->getPlacementTally();
-	?>
 	<table class="table">
 		<thead>
 			<tr><th>Player</th><th>Firsts</th><th>Seconds</th><th>Thirds</th><th>Forths</th><th>Games Played</th></tr>
 		</thead>
 		<tbody>
 			<?php
-			foreach ($tallies as $playerid => $tally) {
+			for ($i=0; $i < $userdetails->getTallyCount(); $i++) { 
 				echo "<tr>";
-				echo "<td>{$tally['playername']}</td>";
-				echo "<td>" . mj_format_percent($tally['first'] / $tally['count']) . "</td>";
-				echo "<td>" . mj_format_percent($tally['second'] / $tally['count']) . "</td>";
-				echo "<td>" . mj_format_percent($tally['third'] / $tally['count']) . "</td>";
-				echo "<td>" . mj_format_percent($tally['forth'] / $tally['count']) . "</td>";
-				echo "<td>{$tally['count']}</td>";
+				echo "<td>" . $userdetails->getTallyPlayerName($i) . "</td>";
+				echo "<td>" . mj_format_percent($userdetails->getTallyFirsts($i)) . "</td>";
+				echo "<td>" . mj_format_percent($userdetails->getTallySeconds($i)) . "</td>";
+				echo "<td>" . mj_format_percent($userdetails->getTallyThirds($i)) . "</td>";
+				echo "<td>" . mj_format_percent($userdetails->getTallyFourths($i)) . "</td>";
+				echo "<td>" . $userdetails->getTallyGameCount($i) . "</td>";
 				echo "</tr>";
 			}
 			?>

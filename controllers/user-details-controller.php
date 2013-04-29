@@ -8,6 +8,33 @@ class UserDetails {
 		$this->games = mj_get_games_of_player($this->userID);
 
 		$this->calculateTally();
+		$this->calculateRunningAverage();
+	}
+
+	private function calculateRunningAverage(){
+		$count = 0;
+		$total = 0;
+		$userid = $this->userID;
+		$averages = array();
+		foreach ($this->games as $key => $game) {
+			$score = 0;
+			if($game->player_1_id == $userid){
+				$score = $game->player_1_score;
+			} else if($game->player_2_id == $userid){
+				$score = $game->player_2_score;
+			} else if($game->player_3_id == $userid){
+				$score = $game->player_3_score;
+			} else if($game->player_4_id == $userid){
+				$score = $game->player_4_score;
+			}
+			$total += $score;
+			$count ++;
+			$averages[] = array(
+				'score' => $score,
+				'average' => $total / $count,
+			);
+		}
+		$this->averages = $averages;
 	}
 
 	private function calculateTally(){
@@ -90,6 +117,10 @@ class UserDetails {
 			'games' => $this->games,
 			'isEditor' => $this->isEditor
 		));
+	}
+
+	public function getPlayerRunningAverage(){
+		return $this->averages;
 	}
 }
 ?>

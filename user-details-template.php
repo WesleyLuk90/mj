@@ -54,6 +54,8 @@
 			?>
 		</tbody>
 	</table>
+	<div class="running-average-graph" data-games="<?php echo esc_attr(json_encode($userdetails->getPlayerRunningAverage())); ?>">
+	</div>
 	<h4>Games</h4>
 	<?php
 		$userdetails->printGameTable();

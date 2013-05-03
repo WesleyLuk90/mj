@@ -54,8 +54,11 @@ class UserList {
 		foreach ($totals as $playerid => $total) {
 			$averages[$playerid] = $total / $count[$playerid];
 		}
-		$scores['average'] = $averages;
-		$this->scores = $scores;
+		$ids = array_keys($averages);
+		$values = array_values($averages);
+		array_multisort($values, SORT_DESC, $ids);
+		$this->averages = array_combine($ids, $values);
+		$this->player_ids = $ids;
 	}
 
 	public function getPlayerCount(){
@@ -71,7 +74,7 @@ class UserList {
 	}
 
 	public function getPlayerAverage($i){
-		return $this->scores['average'][$this->player_ids[$i]];
+		return $this->averages[$this->player_ids[$i]];
 	}
 
 } 

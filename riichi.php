@@ -152,7 +152,7 @@ function mj_print_point_input_box( $args = array() ){
 	echo '</label>';
 	echo '<div class="controls">';
 	echo '<div class="input-append">';
-	echo "<input type=\"number\" name=\"$name\" min="-200" max="200" step="0.1" $class>";
+	echo "<input type=\"number\" name=\"$name\" min=\"-200\" max=\"200\" step=\"0.1\" $class>";
 	echo '<span class="add-on">K</span>';
 	echo '</div>';
 	echo '</div>';

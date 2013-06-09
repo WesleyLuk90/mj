@@ -21,10 +21,15 @@
 
 		foreach ($gameData as $key => $data) {
 			echo "<tr>";
-			if($data['time'] == "0000-00-00 00:00:00"){
+			if($data['time2'] == 0){
 				echo "<td>N/A</td>";
 			} else {
-				echo "<td>{$data['time']}</td>";
+				echo "<td>";
+				$time = new DateTime();
+				$time->setTimeStamp($data['time2']);
+				$time->setTimeZone(new DateTimeZone('America/Vancouver'));
+				echo $time->format('Y-m-d H:i:s');
+				echo "</td>";
 			}
 			print_table_data($data, 0);
 			print_table_data($data, 1);

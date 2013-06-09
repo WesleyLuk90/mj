@@ -17,7 +17,7 @@ if($isEditor){
 		$p3id = stripslashes_deep($_POST['p3-userid']);
 		$p4id = stripslashes_deep($_POST['p4-userid']);
 		$wpdb->insert($mjdb->game_table, array(
-			'time' => $mjdb->get_datetime_now(),
+			'time2' => $mjdb->get_datetime2_now,
 			'player_1_id' => $p1id,
 			'player_2_id' => $p2id,
 			'player_3_id' => $p3id,
@@ -27,7 +27,7 @@ if($isEditor){
 			'player_3_score' => $p3points,
 			'player_4_score' => $p4points
 		), array(
-			'%s',
+			'%d',
 			'%d', '%d', '%d','%d',
 			'%f', '%f', '%f','%f'
 		));

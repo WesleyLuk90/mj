@@ -4,7 +4,7 @@ class MJDB {
 
 	const GAME_FLAG_NORMAL = 0;
 	const GAME_FLAG_DELETED = 1;
-	const CURRENT_VERSION = "0.1";
+	const CURRENT_VERSION = "0.2";
 
 
 	public function __construct(){
@@ -25,6 +25,7 @@ class MJDB {
 		$game_sql = "CREATE TABLE {$this->game_table} (
 			id mediumint(9) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 			time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+			time2 BIGINT DEFAULT 0 NOT NULL,
 			player_1_id mediumint(9) NOT NULL,
 			player_2_id mediumint(9) NOT NULL,
 			player_3_id mediumint(9) NOT NULL,
@@ -41,10 +42,25 @@ class MJDB {
 		);";
 
 		dbDelta($game_sql);
+
+		$data = $wpdb->get_results("SELECT * FROM {$this->game_table}");
+		foreach($data as $i => $value){
+			// echo "DateTime:{$value->time}";
+			$datetime = new DateTime($value->time);
+			// print_r($datetime->getTimestamp());
+			$update_data = array('time2' => $datetime->getTimestamp());
+			$where = array('id' => $value->id);
+			$wpdb->update($this->game_table, $update_data, $where);
+			// echo "<br>";
+		}
 	}
 
 	public function get_datetime_now(){
 		return date ("Y-m-d H:i:s");
+	}
+	
+	public function get_datetime2_now(){
+		return time();
 	}
 
 	public function update_roles_capabilites(){

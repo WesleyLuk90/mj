@@ -209,6 +209,7 @@ function mj_print_game_table($args){
 			'ids' => $ids,
 			'names' => $names,
 			'time' => $game->time,
+			'time2' => $game->time2,
 			'game_id' => $game->id
 		);
 	}

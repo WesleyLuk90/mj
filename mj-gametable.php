@@ -21,7 +21,7 @@
 
 		foreach ($gameData as $key => $data) {
 			echo "<tr>";
-			if($data['time2'] == < 1){
+			if($data['time2'] < 1){
 				echo "<td>N/A</td>";
 			} else {
 				echo "<td>";

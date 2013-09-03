@@ -5,7 +5,8 @@ class UserDetails {
 		$this->userID = (int)stripslashes_deep($_GET['id']);
 		$userinfo = get_userdata($this->userID);
 		$this->username = $userinfo->display_name;
-		$this->games = mj_get_games_of_player($this->userID);
+		$this->games = mj_get_games_list(array(
+			'contains_player' => $this->userID));
 
 		$this->calculateTally();
 		$this->calculateRunningAverage();

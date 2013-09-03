@@ -122,10 +122,11 @@ mj_print_game_table(array(
 							$seasons = riichi_get_seasons();
 							$current = riichi_get_season();
 							foreach($seasons as $season){
+								$name = riichi_get_season_name($season);
 								if($season == $current){
-									echo "<option selected value=\"$season\">$season</option>";
+									echo "<option selected value=\"$season\">$name</option>";
 								} else {
-									echo "<option value=\"$season\">$season</option>";
+									echo "<option value=\"$season\">$name</option>";
 								}
 							} ?>
 						</select>

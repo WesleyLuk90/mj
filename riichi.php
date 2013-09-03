@@ -3,29 +3,46 @@
 require_once(get_stylesheet_directory() . "/install.php");
 require_once(get_stylesheet_directory() . "/riichi-admin.php");
 
-function mj_get_games_list(){
+function mj_get_games_list($args = array()){
 	global $wpdb, $mjdb;
-	$season = riichi_get_season();
-	$query = $wpdb->prepare("
+
+	$defaults = array(
+		'contains_player' => null,
+		'season' => riichi_get_season(),
+		'flag' => $mjdb:: GAME_FLAG_NORMAL,
+	);
+
+	$args = wp_parse_args( $args, $defaults);
+	extract($args);
+
+	$query = "
 		SELECT *
 		FROM {$mjdb->game_table}
-		WHERE flag = %d AND
-		season = %d", $mjdb::GAME_FLAG_NORMAL, $season);
-	return $wpdb->get_results($query);
-}
+		WHERE flag = %d";
+	$params = array($flag);
 
-function mj_get_games_of_player($userid){
-	global $wpdb, $mjdb;
-	$season = riichi_get_season();
-	return $wpdb->get_results($wpdb->prepare("
-		SELECT * FROM {$mjdb->game_table}
-		WHERE flag = %d AND (
-			player_1_id = %d OR
-			player_2_id = %d OR
-			player_3_id = %d OR
-			player_4_id = %d
-		) AND
-		season = %d", $mjdb::GAME_FLAG_NORMAL, $userid, $userid, $userid, $userid, $season));
+	if($season > 0){
+		$query .= " AND season = %d";
+		$params[] = $season;
+	}
+
+	if($contains_player !== null){
+		$query .= " AND
+		(player_1_id = %d OR
+		player_2_id = %d OR
+		player_3_id = %d OR
+		player_4_id = %d)";
+		$params[] = $contains_player;
+		$params[] = $contains_player;
+		$params[] = $contains_player;
+		$params[] = $contains_player;
+	}
+
+	// echo $query;
+	// print_r($params);
+
+	$query = $wpdb->prepare($query, $params);
+	return $wpdb->get_results($query);
 }
 
 function mj_tally_player_placement($userid, $game_placement_array){

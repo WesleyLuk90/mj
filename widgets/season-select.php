@@ -35,20 +35,22 @@ class SeasonSelectorWidget extends WP_Widget {
 				<label class="col-xs-2 control-label">Season:</label>
 				<div class="col-xs-3">
 					<select name="season" class="form-control">
-						<?php foreach($seasons as $season){
+						<?php 
+						foreach($seasons as $season){
+							$name = riichi_get_season_name($season);
 							if($season == $current){
-								echo "<option selected value=\"$season\">$season</option>";
+								echo "<option selected value=\"$season\">$name</option>";
 							} else {
-								echo "<option value=\"$season\">$season</option>";
+								echo "<option value=\"$season\">$name</option>";
 							}
 						} ?>
 					</select>
-				</div
-			</div>
-		</form>
-		<?php
-		echo $args['after_widget'];
-	}
+					</div
+				</div>
+			</form>
+			<?php
+			echo $args['after_widget'];
+		}
 
 	/**
 	 * Back-end widget form.

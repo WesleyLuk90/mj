@@ -83,4 +83,25 @@ class RiichiOptions{
 }
 
 $RiichiOptions = new RiichiOptions();
+
+function riichi_widgets_init() {
+
+	register_sidebar( array(
+		'name' => 'Top Widget Bar',
+		'id' => 'top-widget-bar',
+		'before_widget' => '<div>',
+		'after_widget' => '</div>',
+		'before_title' => '<h2 class="rounded">',
+		'after_title' => '</h2>',
+	) );
+	register_sidebar( array(
+		'name' => 'Bottom Widget Bar',
+		'id' => 'bottom-widget-bar',
+		'before_widget' => '<div>',
+		'after_widget' => '</div>',
+		'before_title' => '<h2 class="rounded">',
+		'after_title' => '</h2>',
+	) );
+}
+add_action( 'widgets_init', 'riichi_widgets_init' );
 ?>

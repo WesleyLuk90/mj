@@ -5,11 +5,18 @@ require_once(get_stylesheet_directory() . "/riichi-admin.php");
 
 function mj_get_games_list(){
 	global $wpdb, $mjdb;
-	return $wpdb->get_results($wpdb->prepare("SELECT * FROM {$mjdb->game_table} WHERE flag = %d", $mjdb::GAME_FLAG_NORMAL));
+	$season = riichi_get_season();
+	$query = $wpdb->prepare("
+		SELECT *
+		FROM {$mjdb->game_table}
+		WHERE flag = %d AND
+		season = %d", $mjdb::GAME_FLAG_NORMAL, $season);
+	return $wpdb->get_results($query);
 }
 
 function mj_get_games_of_player($userid){
 	global $wpdb, $mjdb;
+	$season = riichi_get_season();
 	return $wpdb->get_results($wpdb->prepare("
 		SELECT * FROM {$mjdb->game_table}
 		WHERE flag = %d AND (
@@ -17,7 +24,8 @@ function mj_get_games_of_player($userid){
 			player_2_id = %d OR
 			player_3_id = %d OR
 			player_4_id = %d
-		)", $mjdb::GAME_FLAG_NORMAL, $userid, $userid, $userid, $userid));
+		) AND
+		season = %d", $mjdb::GAME_FLAG_NORMAL, $userid, $userid, $userid, $userid, $season));
 }
 
 function mj_tally_player_placement($userid, $game_placement_array){
@@ -107,57 +115,13 @@ function mj_get_player_ids_from_games($games){
 	return array_values(array_unique($player_ids));
 }
 
-function mj_print_player_select( $args = array() ){
-	$defaults = array(
-		'name' => "player_select",
-		'class' => "",
-		'label' => "Player Select"
-	);
-	$args = wp_parse_args($args, $defaults);
-	extract($args, EXTR_SKIP);
-
+function mj_print_player_options(){
 	$users = mj_get_player_list();
-
-	$class = mj_format_class($class);
-
-	echo '<div class="control-group">';
-	echo '<label class="control-label">';
-	echo esc_html($label);
-	echo '</label>';
-	echo '<div class="controls">';
-	echo "<select $class name=\"$name\">";
 	foreach ($users as $key => $value) {
-		echo "<option value=\"{$value->ID}\">{$value->user_firstname}</option>";
+		echo "<option value=\"{$value->ID}\">{$value->user_login}</option>";
 	}
-	echo "</select>";
-	echo '</div>';
-	echo "</div>";
 }
 
-function mj_print_point_input_box( $args = array() ){
-	$defaults = array(
-		'name' => 'point_input',
-		'class' => "input-mini",
-		'label' => ""
-	);
-
-	$args = wp_parse_args($args, $defaults);
-	extract($args, EXTR_SKIP);
-
-	$class = mj_format_class($class);
-
-	echo '<div class="control-group">';
-	echo '<label class="control-label">';
-	echo esc_html($label);
-	echo '</label>';
-	echo '<div class="controls">';
-	echo '<div class="input-append">';
-	echo "<input type=\"number\" name=\"$name\" min=\"-200\" max=\"200\" step=\"0.1\" $class>";
-	echo '<span class="add-on">K</span>';
-	echo '</div>';
-	echo '</div>';
-	echo "</div>";
-}
 
 
 function mj_get_current_page_url(){
@@ -216,4 +180,15 @@ function mj_print_game_table($args){
 
 	get_template_part('mj', 'gametable');
 }
+session_start();
+function riichi_get_season(){
+	if(isset($_SESSION['riichi_season'])){
+		return $_SESSION['riichi_season'];
+	}
+	return riichi_get_default_season();
+}
+function riichi_set_season($season){
+	$_SESSION['riichi_season'] = $season;
+}
+
 ?>

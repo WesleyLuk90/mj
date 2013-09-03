@@ -23,3 +23,15 @@ google.setOnLoadCallback(function(){
 		chart.draw(gdata, options);
 	};
 });
+
+jQuery(function($){
+	$('.select-season-form').map(function(i, form){
+		form = $(form);
+		form.find('select').on('change', function(){
+			var data = form.serialize();
+			$.post(riichi.ajax_url, data, function(value){
+				window.location.reload();
+			}, 'json');
+		});
+	});
+});

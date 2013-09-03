@@ -37,7 +37,7 @@
 			print_table_data($data, 3);
 			if($isEditor){
 				$attr = sprintf('type="submit" title="delete" class="btn btn-danger" name="game-id" value="%d"', $data['game_id']);
-				echo '<td><button ' . $attr . '"><i class="icon-remove"></button></td>';
+				echo '<td><button ' . $attr . '"><span class="glyphicon glyphicon-remove"></button></td>';
 			}
 			echo "</tr>";
 		}

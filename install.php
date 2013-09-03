@@ -4,7 +4,7 @@ class MJDB {
 
 	const GAME_FLAG_NORMAL = 0;
 	const GAME_FLAG_DELETED = 1;
-	const CURRENT_VERSION = "0.2";
+	const CURRENT_VERSION = "0.30";
 
 
 	public function __construct(){
@@ -26,6 +26,7 @@ class MJDB {
 			id mediumint(9) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 			time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 			time2 BIGINT DEFAULT 0 NOT NULL,
+			season mediumint(9) NOT NULL DEFAULT 1
 			player_1_id mediumint(9) NOT NULL,
 			player_2_id mediumint(9) NOT NULL,
 			player_3_id mediumint(9) NOT NULL,

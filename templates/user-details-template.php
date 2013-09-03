@@ -4,9 +4,12 @@
 */
 	require_once(get_stylesheet_directory() . "/controllers/user-details-controller.php");
 	$userdetails = new UserDetails();
+	$averages = $userdetails->getPlayerRunningAverage();
+	$currentAverage = round($averages[count($averages) - 1]['average']);
 
 	get_header();
 	echo "<h3>User Details for {$userdetails->getUsername()}</h3>";
+	echo "<p>Average:$currentAverage</p>"
 	?>
 	<div class="row-fluid">
 		<div class="span4">
